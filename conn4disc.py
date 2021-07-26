@@ -63,6 +63,8 @@ class connect4(commands.Cog):
                 self.row[empty][column] = "y"
                 self.go =1
         
+
+        ##prints stuff
         toprint = self.row[empty].copy()
         print(toprint)
         for i in range(len(toprint)):
@@ -104,6 +106,8 @@ class connect4(commands.Cog):
                 elif self.row[i][j] == "y":
                     y+=1
                     z=0
+                else:
+                    break
                 if z==4:
                     return("z")
                 if y==4:
@@ -120,56 +124,59 @@ class connect4(commands.Cog):
                     y =0
                 elif self.row[j][i] =="y":
                     y+=1
+                else:
+                    break
                 if z==4:
                     return("z")
                 if y==4:
                     return("y")
         return None
-
-
     async def diagright(self):
         for z in range(3):
             y = z
             for i in range(len(self.row[0])):
                 x = i
-                keyi = 1
+                counter = 1
+                if (self.row[y][x] == "x"):
+                    continue
                 start = self.row[y][x]
                 
-                if (start == "x"):
-                    continue
+                increase = 1
                 while True: 
                     try:
-                        if self.row[y+1][x+1] == start:
-                            keyi+=1
-                            print(keyi)
-                            print(x,y)
-                        x+=1
-                        y+=1
-                        
-                        if ((keyi == 4) and (start != "x")):
+                        if self.row[y+increase][x+increase] == start:
+                            counter+=1
+                        else:
+                            break
+                        increase +=1
+
+                        if ((counter == 4)):
+                            print("Win :D")
                             return start
                     except:
                         break
-                    
-    
+
     async def diagleft(self):
         for z in range(3):
-            y=z
+            y = z
             for i in range(len(self.row[0])-1, -1, -1):
                 x = i
-                keyi = 1
-                start = self.row[y][x]
-                if (start == "x"):
+                counter = 1
+                if (self.row[y][x] == "x"):
                     continue
+                start = self.row[y][x]
+                
+                increase = 1
                 while True: 
                     try:
-                        if self.row[y+1][x-1] == start:
-                            keyi+=1
+                        if self.row[y+increase][x-increase] == start:
+                            counter+=1
                         else:
-                            start = self.row[y+1][x-1]
-                        x-=1
-                        y+=1
-                        if ((keyi == 4) and (start != "x")):
+                            break
+                        increase +=1
+
+                        if ((counter == 4)):
+                            print("Win :D")
                             return start
                     except:
                         break
